@@ -1,0 +1,221 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="scrollstyle" style="overflow-y: auto; height: 100%; padding-right: 15px;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="padding: 0; margin: 0; background-color: #FFF;">
+            <li class="breadcrumb-item text-primary">
+                <b>
+                    Sistem Peminjaman Alat
+                </b>
+            </li>
+            <li class="breadcrumb-item active"><b>Kelola Alat</b></li>
+        </ol>
+    </nav>
+    <hr style="margin-top: .8em;">
+
+
+
+    <input type="file" name="ctl00$MainContent$file" id="file" onchange="cekImage(this);" style="display: none;">
+
+    <div id="MainContent_panelData" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'MainContent_linkCari')">
+
+        <div class="md-form input-group mb-4" style="margin-top: 20px; margin-bottom: 15px !important; display: flex; align-items: center; justify-content: space-between;">
+            <a id="MainContent_linkAdd" class="btn btn-primary btn-rounded waves-effect waves-light" style="padding: 10px 20px;" href="javascript:__doPostBack('ctl00$MainContent$linkAdd','')"><i class="fas fa-plus"></i></a>
+            <input name="ctl00$MainContent$txtCari" type="text" id="MainContent_txtCari" class="form-control form-cari" placeholder="Cari" style="flex-grow: 1; margin: 0 10px;">
+            <a id="MainContent_linkCari" class="btn btn-primary btn-rounded waves-effect waves-light" style="padding: 10px 20px;" href="javascript:__doPostBack('ctl00$MainContent$linkCari','')"><i class="fas fa-search"></i></a>
+        </div>
+
+
+        <div class="scrollstyle" style="overflow-x: auto;">
+            <div>
+                <table class="table table-sm table-hover table-bordered table-striped" cellspacing="0" rules="all" border="1" id="MainContent_gridData" style="width:100%;border-collapse:collapse;">
+                    <tbody>
+                        <tr>
+                            <td>Tidak ada data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="btn-group" style="position: fixed !important; bottom: 15px;" role="group">
+            <a id="MainContent_linkUrutkan" class="btn btn-primary btn-rounded waves-effect waves-light" data-toggle="modal" data-target="#urutkanModal" href="javascript:__doPostBack('ctl00$MainContent$linkUrutkan','')" style="padding: 5px 15px 0px 15px;"><i class="fas fa-sort-amount-up-alt"></i><br><sup style="text-transform: capitalize;">Urutkan</sup></a>
+            <a id="MainContent_linkFilter" class="btn btn-primary btn-rounded waves-effect waves-light" data-toggle="modal" data-target="#filterModal" href="javascript:__doPostBack('ctl00$MainContent$linkFilter','')" style="padding: 5px 23px 0px 17px;"><i class="fas fa-filter"></i><br><sup style="text-transform: capitalize;">Filter</sup></a>
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <div class="modal fade right" id="urutkanModal" tabindex="-1" role="dialog" aria-labelledby="urutkanModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-side modal-bottom-right" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="urutkanModalLabel">Urutkan Data</h4>
+                </div>
+                <div class="modal-body">
+                    <select name="ctl00$MainContent$ddUrut" id="MainContent_ddUrut" class="browser-default custom-select">
+                        <option value="bro_judul asc">Nama Alat [↑]</option>
+                        <option value="bro_judul desc">Nama Alat [↓]</option>
+                        <option value="bro_created_date asc">Tanggal Pengelolaan [↑]</option>
+                        <option selected="selected" value="bro_created_date desc">Tanggal Pengelolaan [↓]</option>
+
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a id="MainContent_linkConfirmUrutkan" class="btn btn-primary" href="javascript:__doPostBack('ctl00$MainContent$linkConfirmUrutkan','')">Urutkan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade right" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-side modal-bottom-right" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="filterModalLabel">Filter Data</h4>
+                </div>
+                <div class="modal-body">
+                    <label style="font-weight: bold;" for="ddStatus">Status</label>
+                    <select name="ctl00$MainContent$ddStatus" id="MainContent_ddStatus" class="browser-default custom-select">
+                        <option selected="selected" value="">-- Semua --</option>
+                        <option value="Draft">Tersedia</option>
+                        <option value="Terkirim">Tidak Tersedia</option>
+
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a id="MainContent_linkConfirmFilter" class="btn btn-primary" href="javascript:__doPostBack('ctl00$MainContent$linkConfirmFilter','')">Terapkan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var obj = { status: false, ele: null };
+
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        function cekBerkas(param) {
+            var input, file, valid = true;
+            input = param;
+            file = input.files[0];
+            if (file.size / 1024 > 1024) {
+                alert("Opps! Berkas terlalu besar! Ukuran maksimal berkas yang bisa dikirim adalah 1 MB");
+                valid = false;
+            }
+            var a = input.value.split(".").pop();
+            if (a.toLowerCase() != "xlsx") {
+                alert("Opps! Format berkas yang dibolehkan adalah .xlsx");
+                valid = false;
+            }
+            if (!valid)
+                param.value = "";
+        }
+
+        function getKonfirmasi(param) {
+            if (obj.status) {
+                obj.status = false;
+                return true;
+            };
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Setelah dikirim, data email broadcast beserta daftar penerima tidak dapat diubah kembali!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Yakin!'
+            }).then((result) => {
+                if (result.value) {
+                    obj.status = true;
+                    obj.ele.click();
+                }
+            });
+            obj.ele = param;
+            return false;
+        }
+
+        tinymce.init({
+            selector: '.tinytext',
+            plugins: 'image link media lists imagetools',
+            menubar: '',
+            toolbar: 'undo redo | bold italic underline strikethrough | numlist bullist | insertfile mybutton media pageembed link',
+            height: 600,
+            contextmenu: 'copy paste',
+            setup: function (editor) {
+                editor.ui.registry.addButton('mybutton', {
+                    type: 'button',
+                    title: 'Insert image',
+                    icon: 'image',
+                    id: 'mybutton',
+                    onAction: function () {
+                        $('#file').click();
+                    }
+                });
+            }
+        });
+
+        function uploadImage(param) {
+            var img = param;
+            var FR = new FileReader();
+
+            FR.addEventListener("load", function (e) {
+                if (img.type !== 'image/jpeg') {
+                    alert('Opps! Format berkas yang dibolehkan adalah .jpg');
+                    return;
+                }
+                img = e.target.result
+                var formData = new FormData();
+                formData.append('file', img);
+                $.ajax({
+                    type: 'POST',
+                    data: "{ 'file' : '" + img + "' }",
+                    url: '',
+                    contentType: "application/json",
+                    processData: false,
+                    success: function (data) {
+                        var img = "<img style='width:100%;' src='" + data.d + "'>";
+                        tinymce.activeEditor.execCommand('mceInsertContent', false, img);
+                    },
+                    error: function (data) {
+                        alert('Terjadi kesalahan saat unggah file');
+                    }
+                });
+            });
+
+            FR.readAsDataURL(img);
+        }
+
+        function cekImage(param) {
+            var input, file, valid = true;
+            input = param;
+            file = input.files[0];
+            if (file.size / 1024 > 1024) {
+                alert("Opps! Berkas terlalu besar! Ukuran maksimal berkas yang bisa dikirim adalah 1 MB");
+                valid = false;
+            }
+            var a = input.value.split(".").pop();
+            if (a.toLowerCase() != "jpg") {
+                alert("Opps! Format berkas yang dibolehkan adalah .jpg");
+                valid = false;
+            }
+            if (!valid) {
+                param.value = "";
+            } else
+                uploadImage(file);
+        }
+    </script>
+

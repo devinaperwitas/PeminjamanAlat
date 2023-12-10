@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="scrollstyle" style="overflow-y: auto; height: 100%; padding-right: 15px;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="padding: 0; margin: 0; background-color: #FFF;">
+            <li class="breadcrumb-item text-primary">
+                <b>
+                    Sistem Peminjaman Alat
+                </b>
+            </li>
+            <li class="breadcrumb-item active"><b>Dashboard</b></li>
+        </ol>
+    </nav>
+    <hr style="margin-top: .8em;">
+    <div style="max-width: 600px; margin: 0;">
+        <canvas id="line-chart-frekuensi"></canvas>
+    </div>
+</div>
+
+<!-- Sertakan skrip Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Tempatkan script ini untuk membuat grafik -->
+<script>
+    // Data frekuensi per bulan
+    var data = {
+        labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+        datasets: [{
+            label: 'Frekuensi',
+            data: [10, 15, 8, 20, 12, 25, 18, 22, 16, 14, 19, 24],
+            borderColor: 'rgba(169, 169, 169, 1)', // Warna abu-abu
+            borderWidth: 2,
+            fill: false
+        }]
+    };
+
+    var ctx = document.getElementById('line-chart-frekuensi').getContext('2d');
+
+    // Mengatur lebar dan tinggi canvas
+    ctx.canvas.width = 400; // Ganti dengan lebar yang diinginkan
+    ctx.canvas.height = 200; // Ganti dengan tinggi yang diinginkan
+
+    // Membuat grafik garis
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
