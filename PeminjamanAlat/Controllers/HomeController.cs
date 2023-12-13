@@ -23,9 +23,50 @@ namespace PeminjamanAlat.Controllers
             return View();
         }
 
-        public IActionResult SSO()
+        [HttpPost]
+        public IActionResult SSO(string Username, string Password)
         {
-            return View();
+            // Perform authentication logic
+            if (IsValidAdminUser(Username, Password))
+            {
+                // Redirect to Admin SSO page
+                return RedirectToAction("Admin");
+            }
+            else if (IsValidSuperAdminUser(Username, Password))
+            {
+                // Redirect to SuperAdmin SSO page
+                return RedirectToAction("SuperAdmin");
+            }
+            else
+            {
+                // Invalid credentials, show login page with a SweetAlert error message
+                TempData["SweetAlertMessage"] = "Invalid username or password.";
+                TempData["SweetAlertType"] = "error";
+                return RedirectToAction("Index");
+
+            }
+        }
+
+        // Add this action for the Admin SSO page
+        public IActionResult Admin()
+        {
+            return View("Admin"); // Assuming you have a view named "SSO_Admin.cshtml"
+        }
+
+        // Add this action for the SuperAdmin SSO page
+        public IActionResult SuperAdmin()
+        {
+            return View("SuperAdmin"); // Assuming you have a view named "SSO_SuperAdmin.cshtml"
+        }
+
+        private bool IsValidAdminUser(string username, string password)
+        {
+            return username == "admin" && password == "admin";
+        }
+
+        private bool IsValidSuperAdminUser(string username, string password)
+        {
+            return username == "superadmin" && password == "superadmin";
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -35,3 +76,4 @@ namespace PeminjamanAlat.Controllers
         }
     }
 }
+

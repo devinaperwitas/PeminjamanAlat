@@ -2,6 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+    ViewData["Title"] = "Kelola User";
 }
 <div class="scrollstyle" style="overflow-y: auto; height: 100%; padding-right: 15px;">
     <nav aria-label="breadcrumb">
@@ -11,7 +13,7 @@
                     Sistem Peminjaman Alat
                 </b>
             </li>
-            <li class="breadcrumb-item active"><b>Kelola Jenis Alat</b></li>
+            <li class="breadcrumb-item active"><b>Kelola User</b></li>
         </ol>
     </nav>
     <hr style="margin-top: .8em;">
@@ -37,7 +39,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">No</th>
-                                <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">Nama Jenis Alat</th>
+                                <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">Nama User</th>
+                                <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">Role</th>
                                 <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">Aksi</th>
                             </tr>
                         </thead>
@@ -58,7 +61,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-bottom" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createModalLabel">Tambah Jenis Alat</h5>
+                        <h5 class="modal-title" id="createModalLabel">Tambah User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -67,11 +70,16 @@
                         <!-- Isi form create Jenis Alat di sini -->
                         <form id="createForm">
                             <div class="form-group">
-                                <label for="namaJenisAlat">Nama Jenis Alat:</label>
+                                <label for="namaJenisAlat">Nama User:</label>
                                 <input type="text" class="form-control" id="namaJenisAlat" required>
                             </div>
-                            <!-- Tambahkan elemen form lainnya sesuai kebutuhan -->
-
+                            <div class="form-group">
+                                <label for="namaJenisAlat">Role:</label>
+                                <select class="form-control" id="namaJenisAlat" required>
+                                    <option value="admin">Admin</option>
+                                    <option value="pengguna">Pengguna</option>
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
                         </form>
                     </div>
@@ -84,7 +92,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="updateModalLabel">Update Jenis Alat</h5>
+                        <h5 class="modal-title" id="updateModalLabel">Update User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -93,7 +101,7 @@
                         <form id="updateForm">
                             <input type="hidden" class="form-control" id="updateJenId" maxlength="25" style="display: inline;">
                             <div class="form-group">
-                                <label for="update_jen_nama" style="font-weight: bold;">Nama Jenis Alat<b style="color: red">*</b></label>
+                                <label for="update_jen_nama" style="font-weight: bold;">Nama User<b style="color: red">*</b></label>
                                 <input type="text" class="form-control" id="updateJenNama" maxlength="25" style="display: inline;">
                             </div>
                         </form>

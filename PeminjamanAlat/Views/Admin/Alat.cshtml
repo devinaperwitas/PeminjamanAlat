@@ -22,28 +22,129 @@
 
     <div id="MainContent_panelData" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'MainContent_linkCari')">
 
-        <div class="md-form input-group mb-4" style="margin-top: 20px; margin-bottom: 15px !important; display: flex; align-items: center; justify-content: space-between;">
-            <a id="MainContent_linkAdd" class="btn btn-primary btn-rounded waves-effect waves-light" style="padding: 10px 20px;" href="javascript:__doPostBack('ctl00$MainContent$linkAdd','')"><i class="fas fa-plus"></i></a>
-            <input name="ctl00$MainContent$txtCari" type="text" id="MainContent_txtCari" class="form-control form-cari" placeholder="Cari" style="flex-grow: 1; margin: 0 10px;">
-            <a id="MainContent_linkCari" class="btn btn-primary btn-rounded waves-effect waves-light" style="padding: 10px 20px;" href="javascript:__doPostBack('ctl00$MainContent$linkCari','')"><i class="fas fa-search"></i></a>
+        <div class="md-form input-group mb-4 " style="margin-top: 0px; margin-bottom: 15px !important;">
+            <a class="btn btn-primary rounded-pill waves-effect waves-light" data-toggle="modal" data-target="#createModal" style="padding: 10px 30px;"><i class="fas fa-plus"></i></a>
+            <input name="ctl00$MainContent$txtCari" type="text" id="MainContent_txtCari" class="form-control form-cari" placeholder="Cari" />
+            @* <a id="MainContent_linkCari" class="btn btn-primary btn-rounded waves-effect waves-light rounded-pill" href="javascript:__doPostBack(&#39;ctl00$MainContent$linkCari&#39;,&#39;&#39;)" style="padding: 10px 30px;"><i class="fas fa-search"></i></a> *@
         </div>
 
 
-        <div class="scrollstyle" style="overflow-x: auto;">
-            <div>
-                <table class="table table-sm table-hover table-bordered table-striped" cellspacing="0" rules="all" border="1" id="MainContent_gridData" style="width:100%;border-collapse:collapse;">
-                    <tbody>
-                        <tr>
-                            <td>Tidak ada data</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+        <div class="container">
+            <div class="scrollstyle" style="overflow-x: auto;">
+                <div>
+                    <table class="table table-sm table-hover table-bordered table-striped" cellspacing="0" rules="all" border="1" id="MainContent_gridData" style="width:100%;border-collapse:collapse;">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">No</th>
+                                <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">Nama Jenis Alat</th>
+                                <th class="text-center" style="background-color: #4285f4; color:white; font-weight:bold">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <br>
         <br>
         <br>
+
+        <!-- Modal Create Jenis Alat -->
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true" data-backdrop="false">
+            <!-- Isi modal di sini -->
+            <div class="modal-dialog modal-dialog-centered modal-dialog-bottom" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModalLabel">Tambah Jenis Alat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Isi form create Jenis Alat di sini -->
+
+                        <form id="createForm">
+                            <div class="form-group">
+                                <label for="namaAlat">Nama Alat:</label>
+                                <input type="text" class="form-control" id="namaAlat" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="jenisAlatDropdown">Jenis Alat:</label>
+                                <select class="form-control" id="jenisAlatDropdown" placeholder="Pilih Jenis Alat" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal Pendataan:</label>
+                                <input type="text" class="form-control" id="namaAlat" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaAlat">Jumlah Masuk:</label>
+                                <input type="text" class="form-control" id="namaAlat" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaAlat">Jumlah Keluar:</label>
+                                <input type="text" class="form-control" id="namaAlat" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="namaAlat">Sisa Alat:</label>
+                                <input type="text" class="form-control" id="namaAlat" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" onclick="simpan()">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Update Jenis Alat -->
+        <div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Update Jenis Alat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateForm">
+                            <input type="hidden" class="form-control" id="updateJenId" maxlength="25" style="display: inline;">
+                            <div class="form-group">
+                                <label for="update_jen_nama" style="font-weight: bold;">Nama Jenis Alat<b style="color: red">*</b></label>
+                                <input type="text" class="form-control" id="updateJenNama" maxlength="25" style="display: inline;">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="edit()">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal untuk Detail Informasi Jenis Alat -->
+        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel">Detail Jenis Alat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>ID Jenis Alat:</strong> <span id="detailJenId"></span></p>
+                        <p><strong>Nama Jenis Alat:</strong> <span id="detailJenNama"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" asp-action="JenisAlat">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="btn-group" style="position: fixed !important; bottom: 15px;" role="group">
             <a id="MainContent_linkUrutkan" class="btn btn-primary btn-rounded waves-effect waves-light" data-toggle="modal" data-target="#urutkanModal" href="javascript:__doPostBack('ctl00$MainContent$linkUrutkan','')" style="padding: 5px 15px 0px 15px;"><i class="fas fa-sort-amount-up-alt"></i><br><sup style="text-transform: capitalize;">Urutkan</sup></a>
@@ -100,122 +201,188 @@
             </div>
         </div>
     </div>
+</div>
 
-    <script type="text/javascript">
-        var obj = { status: false, ele: null };
+<script>
+    //memanggil function loadTable untuk menampilkan data pada table ketika halaman ditampilkan
+    loadTable()
 
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
+    function showUpdateModal(id, jen_nama) {
+        // Menetapkan nilai nama_jenis ke input atau elemen modal yang sesuai
+        $('#updateJenNama').val(jen_nama);
+        $('#updateJenId').val(id);
+        // Menampilkan modal update
+    }
+    //function untuk menampilkan semua data yang ada pada table
+    function loadTable() {
+        var hostname = "https://localhost:7280/";
+        var url = hostname + "GetAllJenisAlat"; // Ganti dengan endpoint untuk Jenis Paket
+        var method = "GET";
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                //var jenisAlatList = data.data;
+
+                $('#tbody').empty();
+
+                data.forEach(function (item, index) {
+                    var newRow = "<tr>" +
+                        "<td class='text-center'>" + (index + 1) + "</td>" +
+                        "<td>" + item.jen_nama + "</td>" +
+                        "<td class='text-center'>" +
+                        "<a data-toggle='modal' data-target='#staticBackdrop' onclick='showUpdateModal(\"" + item.id + "\", \"" + item.jen_nama + "\")'><i class='fas fa-edit'></i></a>" +
+                        "&nbsp;&nbsp;&nbsp;" +
+                        "<a href='#' class='delete-btn' data-id='" + item.id + "'><i class='fas fa-trash'></i></a>" +
+                        "&nbsp;&nbsp;&nbsp;" +
+                        "<a data-toggle='modal' data-target='#detailModal' data-backdrop='false' onclick='showDetail(\"" + item.id + "\", \"" + item.jen_nama + "\")'><i class='fas fa-info-circle'></i></a>" +
+                        "</td>" +
+                        "</tr>";
+
+
+                    $('#tbody').append(newRow);
+                });
+
+                // Attach click event to delete buttons
+                $('.delete-btn').click(function () {
+                    var jenId = $(this).data('id');
+                    hapus(jenId);
+                });
+            },
+        });
+    }
+
+    function simpan() {
+        var jen_nama = document.getElementById("namaJenisAlat").value;
+
+        if (!jen_nama) {
+            alert("ISI SEMUA DATA!");
+            return;
         }
 
-        function cekBerkas(param) {
-            var input, file, valid = true;
-            input = param;
-            file = input.files[0];
-            if (file.size / 1024 > 1024) {
-                alert("Opps! Berkas terlalu besar! Ukuran maksimal berkas yang bisa dikirim adalah 1 MB");
-                valid = false;
-            }
-            var a = input.value.split(".").pop();
-            if (a.toLowerCase() != "xlsx") {
-                alert("Opps! Format berkas yang dibolehkan adalah .xlsx");
-                valid = false;
-            }
-            if (!valid)
-                param.value = "";
+        var hostname = "https://localhost:7280/";
+        var url = hostname + "InsertJenisAlat";
+        var method = "POST";
+        var input = {
+            jen_nama: jen_nama
+
+        };
+        var data = JSON.stringify(input);
+
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Data Berhasil Ditambahkan");
+                // Mengarahkan kembali ke halaman index di controller Home
+                window.location.href = '@Url.Action("JenisAlat", "Admin")';
+            },
+        });
+    }
+
+    function showDetail(id, jen_nama) {
+        console.log('showDetail called:', id, jen_nama)
+        $('#detailJenId').text(id)
+        $('#detailJenNama').text(jen_nama)
+    }
+
+    function edit() {
+        var jen_id = document.getElementById("updateJenId").value;
+        var jen_nama = document.getElementById("updateJenNama").value;
+
+        if (!jen_id || !jen_nama) {
+            alert("ISI SEMUA DATA!");
+            return;
         }
 
-        function getKonfirmasi(param) {
-            if (obj.status) {
-                obj.status = false;
-                return true;
-            };
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Setelah dikirim, data email broadcast beserta daftar penerima tidak dapat diubah kembali!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Yakin!'
-            }).then((result) => {
-                if (result.value) {
-                    obj.status = true;
-                    obj.ele.click();
-                }
-            });
-            obj.ele = param;
-            return false;
-        }
+        var hostname = "https://localhost:7280/";
+        var url = hostname + "UpdateJenisAlat";
+        var method = "PUT";
+        var input = {
+            id: jen_id,
+            jen_nama: jen_nama,
+        };
+        var data = JSON.stringify(input);
 
-        tinymce.init({
-            selector: '.tinytext',
-            plugins: 'image link media lists imagetools',
-            menubar: '',
-            toolbar: 'undo redo | bold italic underline strikethrough | numlist bullist | insertfile mybutton media pageembed link',
-            height: 600,
-            contextmenu: 'copy paste',
-            setup: function (editor) {
-                editor.ui.registry.addButton('mybutton', {
-                    type: 'button',
-                    title: 'Insert image',
-                    icon: 'image',
-                    id: 'mybutton',
-                    onAction: function () {
-                        $('#file').click();
-                    }
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Data Berhasil Diupdate");
+                window.location.href = '@Url.Action("JenisAlat", "Admin")';
+            },
+        });
+    }
+
+
+    function hapus(id) {
+        // Menampilkan pesan konfirmasi SweetAlert
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+        }).then((result) => {
+            // Jika pengguna menekan tombol "Ya"
+            if (result.value) {
+                // Proses penghapusan data
+                var hostname = "https://localhost:7280/";
+                var url = hostname + "DeleteJenisAlat?id=" + id;
+                var method = "DELETE";
+
+                $.ajax({
+                    url: url,
+                    method: method,
+                    contentType: "application/json",
+                    success: function (data) {
+                        // Menampilkan pesan sukses SweetAlert
+                        Swal.fire('Terhapus!', 'Data telah dihapus.', 'success').then(() => {
+                            // Me-reload halaman setelah menghapus data
+                            location.reload();
+                        });
+                    },
+                    error: function (data) {
+                        // Menampilkan pesan kesalahan SweetAlert jika penghapusan gagal
+                        Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                    },
                 });
             }
         });
+    }
 
-        function uploadImage(param) {
-            var img = param;
-            var FR = new FileReader();
+    // Function untuk mengisi dropdown jenis alat pada saat membuka modal
+    $('#createModal').on('shown.bs.modal', function () {
+        fillJenisAlatDropdown();
+    });
 
-            FR.addEventListener("load", function (e) {
-                if (img.type !== 'image/jpeg') {
-                    alert('Opps! Format berkas yang dibolehkan adalah .jpg');
-                    return;
-                }
-                img = e.target.result
-                var formData = new FormData();
-                formData.append('file', img);
-                $.ajax({
-                    type: 'POST',
-                    data: "{ 'file' : '" + img + "' }",
-                    url: '',
-                    contentType: "application/json",
-                    processData: false,
-                    success: function (data) {
-                        var img = "<img style='width:100%;' src='" + data.d + "'>";
-                        tinymce.activeEditor.execCommand('mceInsertContent', false, img);
-                    },
-                    error: function (data) {
-                        alert('Terjadi kesalahan saat unggah file');
-                    }
+    // Function untuk mengisi dropdown jenis alat
+    function fillJenisAlatDropdown() {
+        var hostname = "https://localhost:7280/";
+        var url = hostname + "GetAllJenisAlat";
+        var method = "GET";
+
+        $.ajax({
+            url: url,
+            method: method,
+            contentType: "application/json",
+            success: function (data) {
+                var dropdown = $('#jenisAlatDropdown');
+                dropdown.empty();
+
+                data.forEach(function (item) {
+                    dropdown.append($('<option></option>').attr('value', item.id).text(item.jen_nama));
                 });
-            });
+            },
+        });
+    }
+</script>
 
-            FR.readAsDataURL(img);
-        }
-
-        function cekImage(param) {
-            var input, file, valid = true;
-            input = param;
-            file = input.files[0];
-            if (file.size / 1024 > 1024) {
-                alert("Opps! Berkas terlalu besar! Ukuran maksimal berkas yang bisa dikirim adalah 1 MB");
-                valid = false;
-            }
-            var a = input.value.split(".").pop();
-            if (a.toLowerCase() != "jpg") {
-                alert("Opps! Format berkas yang dibolehkan adalah .jpg");
-                valid = false;
-            }
-            if (!valid) {
-                param.value = "";
-            } else
-                uploadImage(file);
-        }
-    </script>
 

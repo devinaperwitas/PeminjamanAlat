@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PeminjamanAlat.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
-
 
     @*ajax*@
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+
+    @* Data Table *@
+    @**@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
 
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -138,7 +141,7 @@
                     </div>
                 </div>
                 <div class="panelauthentication">
-                    <b style="font-weight:bold">Devina Perwita Sari (ADMIN)</b><br>
+                    <b style="font-weight:bold">Rasyidin Aziz (PEMINJAM)</b><br>
                     <span style='font-size: 11px'>
                         Login Terakhir: <span id="lastLogin"></span>
                     </span>
@@ -150,18 +153,16 @@
             <div class="col-lg-2 panelmenu" style="background-color: #fff;">
                 <div class="scrollstyle" style="overflow-y: auto; height: 100%;">
                     <ul class="list-group" style="font-size: 14px;">
-                        <li class='list-group-item border border-0 panelauthenticationmobile' style='background-color: #FFFFC0;'>Hai, <b>Devina Perwita Sari (ADMIN)</b></li>
-                         <a asp-controller="Home" asp-action="Index" style="color:black">
+                        <li class='list-group-item border border-0 panelauthenticationmobile' style='background-color: #FFFFC0;'>Hai, <b>Rasyidin Aziz (PEMINJAM)</b></li>
+                        <a asp-controller="Home" asp-action="Index" style="color:black">
                         <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;' onclick="alert';"><i class='fas fa-sign-out-alt' style='margin-right: 7px;'></i><b>Logout</b></li></a>
-                         <a asp-controller="Admin" asp-action="Index" style="color:black">
+                        <a asp-controller="Admin" asp-action="Index" style="color:black">
                         <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;' onclick="alert';"><i class='fas fa-home' style='margin-right: 7px;'></i><b>Dashboard</b></li></a>
                         <a asp-controller="Admin" asp-action="JenisAlat" style="color:black">
-                        <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;'><b><i class="bi bi-tools" style='margin-right: 7px;' onclick="alert"></i>Kelola Jenis Alat</b></li></a>
+                        <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;'><b><i class="bi bi-tools" style='margin-right: 7px;' onclick="alert"></i>Peminjaman Alat</b></li></a>
                         <a asp-controller="Admin" asp-action="Alat" style="color:black">
-                        <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;'><b><i class="bi bi-tools" style='margin-right: 7px;' onclick="alert"></i>Kelola Alat</b></li></a>
-                         <a asp-controller="Admin" asp-action="Alat" style="color:black">
-                        <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;' onclick="alert';"><b><i class="bi bi-wrench-adjustable-circle" style='margin-right: 7px;'></i>Pengembalian Alat</b></li></a>
-                         <a asp-controller="Home" asp-action="SSO" style="color:black">
+                        <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;'><b><i class="bi bi-tools" style='margin-right: 7px;' onclick="alert"></i>Riwayat Peminjaman Alat</b></li></a>
+                        <a asp-controller="Home" asp-action="SSO" style="color:black">
                         <li class='list-group-item border border-0 hovermenu' style='cursor: pointer;' onclick="alert';"><i class='fas fa-external-link-alt' style='margin-right: 7px;'></i><b>Halaman SSO</b></li></a>
                     </ul>
                 </div>

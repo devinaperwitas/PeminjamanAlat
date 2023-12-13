@@ -54,6 +54,16 @@
 
     <div class="panelfooter">Copyright &copy; @DateTime.Now.Year - MIS Politeknik Astra</div>
 
+    @if (TempData["SweetAlertMessage"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: '@TempData["SweetAlertMessage"]',
+                icon: '@TempData["SweetAlertType"]'
+            });
+        </script>
+    }
 </body>
 </html>
 
